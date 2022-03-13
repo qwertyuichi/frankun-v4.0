@@ -1,0 +1,47 @@
+%YAML 1.2
+---
+nn:
+    blob_path:              "robo_one_v2.1_s.blob"
+    input_size:             [416,416]
+    classes:                3
+    coordinates:            4
+    class_names:            ["person", "doll", "robot"]
+    iou_threshold:          0.5
+    confidence_threshold:   0.5
+    anchors:                [10,13, 16,30, 33,23, 30,61, 62,45, 59,119, 116,90, 156,198, 373,326]
+    anchor_masks:
+        side52:             [0,1,2] 
+        side26:             [3,4,5] 
+        side13:             [6,7,8]
+
+camera:
+    resolution: "1080p"  # 1080p/4k/12mp/13mp のいずれかを設定する
+    fps:        15
+
+ring_detection:
+    calib_matrix_path:  cm.yaml   # キャリブレーション用Matが保存されたファイル
+    floor_range:        150       # 足裏よりリングとみなす範囲[mm]
+    edge_threshold:     700       # エッジ限界：distanceEdgeがこの値以下になったら旋回して引き返す
+
+debug:
+    resolution:         [1280, 720]
+    display_enable:     True
+    streaming_enable:   False
+    streaming_port:     12345
+    log_folder_path:    /home/yuichi/Share/log
+    save_movie_enable:   False
+    save_text_enable:    False
+    
+
+target_profile:
+    target_name:        "robot"
+    ignore_distances:   [1000,      1000,     600 ]    # 単位は[mm] この距離以上であれば検出していてもZYNQに情報を送らない
+    colors:             [blue,      black,    red ]    # BoundingBoxの色
+    visible:            [True,      True,     True]    # BoundingBoxを表示するか否か
+
+serial_communication:
+    primary_port:       "/dev/ttyTHS0"  # インジケータと接続するポート
+    secondary_port:     "/dev/ttyTHS1"  # ZYNQと接続するポート
+    baud_rate:          115200
+    max_dev:            256             # DEVの最大値(メッセージフォーマット参照)
+    max_object:         3
